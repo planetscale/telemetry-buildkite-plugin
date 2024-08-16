@@ -7,4 +7,4 @@ set -eou pipefail
 
 docker stop -t1 dstat
 echo "+++ Telemetry +++"
-cat /tmp/dstat-experiment.txt
+cat /tmp/telemetry.txt

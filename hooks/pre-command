@@ -16,6 +16,6 @@ docker run \
   -v /tmp:/tmp \
   --entrypoint="/bin/bash" \
   ghcr.io/planetscale/telemetry-buildkite-plugin:latest \
-  -c "dstat -t -c -m -n --disk-tps --disk --color --noupdate 10 > /tmp/dstat-experiment.txt"
+  -c "dstat -t -c -m -n --disk-tps --disk --color --noupdate 10 > /tmp/telemetry.txt"
 
 docker ps -a
