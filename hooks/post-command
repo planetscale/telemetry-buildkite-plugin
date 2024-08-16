@@ -3,9 +3,8 @@
 set -eou pipefail
 #set -x
 
-# TODO: proper tempdir scoped to this invocation
+docker stop -t1 telemetry-plugin
 
-docker stop -t1 dstat
 echo "+++ :bar_chart: Telemetry:"
 cat "$BUILDKITE_TELEMETRY_PLUGIN_OUTFILE"
 
