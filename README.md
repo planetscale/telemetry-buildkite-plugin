@@ -10,7 +10,7 @@ Add the following to your `pipeline.yml`:
 steps:
   - command: ./run_build.sh
     plugins:
-      - planetscale/telemetry#v0.0.1: {}
+      - planetscale/telemetry#v0.0.2: {}
 ```
 ## Developing
 
