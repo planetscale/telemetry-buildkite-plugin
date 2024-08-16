@@ -3,11 +3,13 @@ on:
   push:
     branches:
       - main
+      - gha-release-2
     paths-ignore:
       - README.md
       - .buildkite/**
       - .github/**
       - docker-compose.yml
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,6 +17,7 @@ jobs:
 
     permissions:
       contents: write
+      packages: write
 
     steps:
       - name: login to ghcr.io
@@ -28,20 +31,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Update README.md
+      - name: Calculate new version with autotag
         run: |
           curl -sL https://git.io/autotag-install | sh -s -- -b "${RUNNER_TEMP}/bin"
           set -x
           version=$(${RUNNER_TEMP}/bin/autotag -n)
-          sed -i'' -Ee "s/telemetry#v(.*):/telemetry#v${version}:/" README.md
+          echo "version=$version" >> $GITHUB_ENV
 
-      - name: Commit README.md
+      - name: Update version in README.md and hooks/pre-command
+        run: |
+          sed -i'' -Ee "s/telemetry#v(.*):/telemetry#v${version}:/" README.md
+          sed -i'' -Ee "s/TAG=\"v(.*)\"/TAG=\"v${version}\"/" hooks/pre-command
+
+      - name: Commit changes
         uses: planetscale/ghcommit-action@c7915d6c18d5ce4eb42b0eff3f10a29fe0766e4c # v0.1.44
         with:
-          commit_message: "🤖 Update README.md"
+          commit_message: "🤖 Update version tag"
           repo: ${{ github.repository }}
           branch: ${{ github.head_ref || github.ref_name }}
-          file_pattern: README.md
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 

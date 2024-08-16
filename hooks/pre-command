@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 set -eou pipefail
-set -x
+#set -x
 
-# TODO: proper tempdir scoped to this invocation
+TAG="v0.0.0"
 
 docker run \
   --rm \
   --init \
   --detach \
-  --name dstat \
+  --name telemetry-plugin \
   --pid host \
   --net host \
   --userns host \
   -v "$BUILDKITE_TELEMETRY_PLUGIN_TMPDIR:$BUILDKITE_TELEMETRY_PLUGIN_TMPDIR" \
-  ghcr.io/planetscale/telemetry-buildkite-plugin:latest \
+  ghcr.io/planetscale/telemetry-buildkite-plugin:"$TAG" \
   "dstat -t -c -m -n --disk-tps --disk --color --noupdate 10 > $BUILDKITE_TELEMETRY_PLUGIN_OUTFILE"
 
 docker ps -a
