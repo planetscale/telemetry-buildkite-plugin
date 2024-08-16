@@ -7,4 +7,4 @@ RUN apt-get -qy update && apt-get install -qy \
 
 RUN cd /var/lib/pcp/pmns && ./Rebuild
 
-ENTRYPOINT ["/usr/bin/dstat"]
+ENTRYPOINT ["/bin/sh", "-c"]

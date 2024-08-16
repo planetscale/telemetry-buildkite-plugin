@@ -13,9 +13,8 @@ docker run \
   --pid host \
   --net host \
   --userns host \
-  -v /tmp:/tmp \
-  --entrypoint="/bin/bash" \
+  -v "$BUILDKITE_TELEMETRY_PLUGIN_TMPDIR:$BUILDKITE_TELEMETRY_PLUGIN_TMPDIR" \
   ghcr.io/planetscale/telemetry-buildkite-plugin:latest \
-  -c "dstat -t -c -m -n --disk-tps --disk --color --noupdate 10 > /tmp/telemetry.txt"
+  "dstat -t -c -m -n --disk-tps --disk --color --noupdate 10 > $BUILDKITE_TELEMETRY_PLUGIN_OUTFILE"
 
 docker ps -a
