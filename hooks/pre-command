@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+set -x
+
+# TODO: proper tempdir scoped to this invocation
+
+docker run \
+  --rm \
+  --init \
+  --detach \
+  --name dstat \
+  --pid host \
+  --net host \
+  --userns host \
+  -v /tmp:/tmp \
+  --entrypoint="/bin/bash" \
+  ghcr.io/planetscale/telemetry-buildkite-plugin:latest \
+  -c "dstat -t -c -m -n --disk-tps --disk --color --noupdate 10 > /tmp/dstat-experiment.txt"
+
+docker ps -a

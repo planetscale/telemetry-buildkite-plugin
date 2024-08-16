@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+#set -x
+
+# TODO: proper tempdir scoped to this invocation
+
+docker stop -t1 dstat
+echo "+++ Telemetry +++"
+cat /tmp/dstat-experiment.txt

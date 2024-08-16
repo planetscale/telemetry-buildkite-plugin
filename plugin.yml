@@ -1,0 +1,9 @@
+name: Buildkite job telemetry collector
+description: Collect telemetry data from Buildkite jobs and display results at the end of the build.
+author: https://github.com/planetscale
+requirements:
+  - bash
+  - docker
+configuration:
+  properties: {}
+  additionalProperties: false
