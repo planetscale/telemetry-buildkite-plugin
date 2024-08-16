@@ -1,0 +1,60 @@
+name: Update README.md and create release
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - .buildkite/**
+      - .github/**
+      - docker-compose.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: login to ghcr.io
+        uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Update README.md
+        run: |
+          curl -sL https://git.io/autotag-install | sh -s -- -b "${RUNNER_TEMP}/bin"
+          set -x
+          version=$(${RUNNER_TEMP}/bin/autotag -n)
+          sed -i'' -Ee "s/telemetry#v(.*):/telemetry#v${version}:/" README.md
+
+      - name: Commit README.md
+        uses: planetscale/ghcommit-action@c7915d6c18d5ce4eb42b0eff3f10a29fe0766e4c # v0.1.44
+        with:
+          commit_message: "🤖 Update README.md"
+          repo: ${{ github.repository }}
+          branch: ${{ github.head_ref || github.ref_name }}
+          file_pattern: README.md
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Release
+        run: |
+          set -eou pipefail
+          set -x
+
+          git reset --hard && git clean -ffdx && git pull
+          version=$(${RUNNER_TEMP}/bin/autotag -n)
+          gh release create "v${version}" --target main --title "v${version}" --generate-notes
+
+          docker build -t ghcr.io/planetscale/telemetry:v${version} .
+          docker push ghcr.io/planetscale/telemetry:v${version}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
