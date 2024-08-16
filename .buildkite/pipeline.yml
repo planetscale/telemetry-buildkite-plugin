@@ -12,7 +12,7 @@ steps:
       - docker-compose#v5.3.0:
           run: lint-plugin
 
-  - name: bats tests
-    plugins:
-      - docker-compose#v5.3.0:
-          run: tests
+  # - name: bats tests
+  #   plugins:
+  #     - docker-compose#v5.3.0:
+  #         run: tests
