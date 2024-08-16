@@ -1,6 +1,9 @@
 # Buildkite Job Telemetry Reporter
 
-TODO
+Capture and report telemetry (CPU/memory/disk/network) from Buildkite jobs.
+
+Metrics are collected with `dstat` on 10 second intervals and added to the job log
+at the end of the job.
 
 ## Example
 
@@ -12,6 +15,9 @@ steps:
     plugins:
       - planetscale/telemetry#v0.0.3: {}
 ```
+
+The are no configuration options at this time.
+
 ## Developing
 
 To run the linters:
@@ -28,8 +34,11 @@ make test
 
 ## Releases
 
-The release process is currently manual. Bump the tag and push to GitHub.
-
+A new version is automatically released on all main branch merges. We use
+[autotag](https://github.com/pantheon-systems/autotag) to generate tags. Autotag
+can be configured via commit messages. By default, it will increment the patch
+version. To increment the minor or major version, include [minor] or [major] in the
+first line of a commit message.
 
 ## Contributing
 
@@ -38,3 +47,11 @@ The release process is currently manual. Bump the tag and push to GitHub.
 3. Run the tests
 4. Commit and push your changes
 5. Send a pull request
+
+## TODO
+
+This should be rewritten as a standalone app with a nicer summary and graphs attached
+to the job via `buildkite-agent annotate`. For now, the 10-second interval output of
+`dstat` is good enough.
+
+Inspiration: https://github.com/catchpoint/workflow-telemetry-action
