@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - gha-release-2
     paths-ignore:
       - README.md
       - .buildkite/**
@@ -46,7 +45,7 @@ jobs:
       - name: Commit changes
         uses: planetscale/ghcommit-action@c7915d6c18d5ce4eb42b0eff3f10a29fe0766e4c # v0.1.44
         with:
-          commit_message: "🤖 Update version tag"
+          commit_message: "🤖 Bump version"
           repo: ${{ github.repository }}
           branch: ${{ github.head_ref || github.ref_name }}
         env:
@@ -57,11 +56,13 @@ jobs:
           set -eou pipefail
           set -x
 
-          git reset --hard && git clean -ffdx && git pull
-          version=$(${RUNNER_TEMP}/bin/autotag -n)
-          gh release create "v${version}" --target main --title "v${version}" --generate-notes
+          image="ghcr.io/planetscale/telemetry-buildkite-plugin:v${version}"
 
-          docker build -t ghcr.io/planetscale/telemetry:v${version} .
-          docker push ghcr.io/planetscale/telemetry:v${version}
+          git reset --hard && git clean -ffdx && git pull
+
+          docker build -t "$image" .
+          docker push "$image"
+
+          gh release create "v${version}" --target main --title "v${version}" --generate-notes
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
