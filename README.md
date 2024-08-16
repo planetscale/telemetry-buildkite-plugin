@@ -1,4 +1,4 @@
-# Buildkite Job Telemetry Collector
+# Buildkite Job Telemetry Reporter
 
 TODO
 

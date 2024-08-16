@@ -1,4 +1,4 @@
-name: Buildkite job telemetry collector
+name: Buildkite Job Telemetry Reporter
 description: Collect telemetry data from Buildkite jobs and display results at the end of the build.
 author: https://github.com/planetscale
 requirements:

@@ -6,5 +6,7 @@ set -eou pipefail
 # TODO: proper tempdir scoped to this invocation
 
 docker stop -t1 dstat
-echo "+++ Telemetry +++"
-cat /tmp/dstat-experiment.txt
+echo "+++ :bar_chart: Telemetry:"
+cat "$BUILDKITE_TELEMETRY_PLUGIN_OUTFILE"
+
+rm -rf -- "$BUILDKITE_TELEMETRY_PLUGIN_TMPDIR"
