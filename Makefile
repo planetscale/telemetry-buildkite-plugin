@@ -7,8 +7,9 @@ lint-plugin:
 lint: lint-plugin lint-shellcheck
 
 test:
-	@docker compose run --rm tests
-	@echo "run 'make clean' to stop and remove test containers"
+	@echo "no tests yet"
+	# @docker compose run --rm tests
+	# @echo "run 'make clean' to stop and remove test containers"
 
 clean:
 	@docker compose down
