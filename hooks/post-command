@@ -5,11 +5,11 @@ set -eou pipefail
 
 docker stop -t1 telemetry-plugin
 
-vcpus=$(lscpu | awk -F ":" '/Core/ { c=$2; }; /Socket/ { s=$2; }; END { print s*c }')
+vcpus=$(lscpu | awk -F ":" '/Thread/ { t=$2; }; /Core/ { c=$2; }; /Socket/ { s=$2; }; END { print s*c*t }')
 phys_cpus=$(lscpu | awk -F ":" '/Core/ { c=$2; }; /Socket/ { s=$2; }; END { print s*c }')
 ram_gb=$(awk '/MemTotal/ {printf "%d", $2/1024/1024}' /proc/meminfo)
 
-echo "--- :bar_chart: Telemetry. ${vcpus} vCPUS (${phys_cpus} physical CPUs), ${ram_gb} GB"
+echo "--- :bar_chart: Telemetry report below (node: ${vcpus} vCPUS (${phys_cpus} physical CPUs), ${ram_gb} GB):"
 
 cat "$BUILDKITE_TELEMETRY_PLUGIN_OUTFILE"
 
