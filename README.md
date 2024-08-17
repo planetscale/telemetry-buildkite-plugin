@@ -1,5 +1,7 @@
 # Buildkite Job Telemetry Reporter
 
+![screenshot](./docs/screenshot.png)
+
 Capture and report telemetry (CPU/memory/disk/network) from Buildkite jobs.
 
 Metrics are collected with `dstat` on 10 second intervals and added to the job log

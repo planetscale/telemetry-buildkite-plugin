@@ -5,6 +5,7 @@ on:
       - main
     paths-ignore:
       - README.md
+      - docs/**
       - .buildkite/**
       - .github/**
       - docker-compose.yml
