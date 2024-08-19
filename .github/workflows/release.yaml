@@ -9,6 +9,7 @@ on:
       - .buildkite/**
       - .github/**
       - docker-compose.yml
+      - renovate.json5
   workflow_dispatch:
 
 jobs:

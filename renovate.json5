@@ -3,5 +3,14 @@
   "extends": [
     "github>planetscale/renovate-config",
     "github>planetscale/renovate-config:weeklyBatchMinorPatchDigest"
+  ],
+  "packageRules": [
+    {
+      "description": "Don't pin ubuntu image, we want to build from the latest at the time of release",
+      "matchPackageNames": [
+        "ubuntu"
+      ],
+      "pinDigests": false
+    }
   ]
 }
