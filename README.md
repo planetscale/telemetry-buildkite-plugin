@@ -15,7 +15,7 @@ Add the following to your `pipeline.yml`:
 steps:
   - command: ./run_build.sh
     plugins:
-      - planetscale/telemetry#v0.0.6: {}
+      - planetscale/telemetry#v0.0.7: {}
 ```
 
 The are no configuration options at this time.
