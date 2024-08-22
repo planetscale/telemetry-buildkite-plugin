@@ -9,7 +9,7 @@ docker run \
   --rm \
   --init \
   --detach \
-  --name telemetry-plugin \
+  --name "$BUILDKITE_TELEMETRY_PLUGIN_CONTAINER_NAME" \
   --pid host \
   --net host \
   --userns host \

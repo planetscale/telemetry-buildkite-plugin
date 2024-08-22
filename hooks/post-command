@@ -3,7 +3,7 @@
 set -eou pipefail
 #set -x
 
-docker stop -t1 telemetry-plugin
+docker stop -t1 "$BUILDKITE_TELEMETRY_PLUGIN_CONTAINER_NAME" || true
 
 vcpus=$(lscpu | awk -F ":" '/Thread/ { t=$2; }; /Core/ { c=$2; }; /Socket/ { s=$2; }; END { print s*c*t }')
 phys_cpus=$(lscpu | awk -F ":" '/Core/ { c=$2; }; /Socket/ { s=$2; }; END { print s*c }')
