@@ -9,6 +9,7 @@ steps:
 
   - name: lint-plugin
     plugins:
+      - planetscale/telemetry#${BUILDKITE_COMMIT}: {}
       - docker-compose#v5.3.0:
           run: lint-plugin
 
