@@ -45,7 +45,7 @@ jobs:
           sed -i'' -Ee "s/TAG=\"v(.*)\"/TAG=\"v${version}\"/" hooks/pre-command
 
       - name: Commit changes
-        uses: planetscale/ghcommit-action@88c53665a0c85bc370b410610f2bcf1979204651 # v0.1.45
+        uses: planetscale/ghcommit-action@dc25faa872c78774e45b309d2303469af36bc45f # v0.1.46
         with:
           commit_message: "🤖 Bump version"
           repo: ${{ github.repository }}
@@ -57,7 +57,7 @@ jobs:
       - name: Set up QEMU (for arm64 builds)
         uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3
+        uses: docker/setup-buildx-action@c47758b77c9736f4b2ef4073d4d51994fabfe349 # v3
 
       - name: Release
         run: |
