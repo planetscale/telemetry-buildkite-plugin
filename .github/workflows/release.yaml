@@ -45,7 +45,7 @@ jobs:
           sed -i'' -Ee "s/TAG=\"v(.*)\"/TAG=\"v${version}\"/" hooks/pre-command
 
       - name: Commit changes
-        uses: planetscale/ghcommit-action@86434b0b2603b57a211bae56ceee257b85646630 # v0.2.8
+        uses: planetscale/ghcommit-action@c6125dee9e9c0daebc4adea9f68ead8293414174 # v0.2.9
         with:
           commit_message: "🤖 Bump version"
           repo: ${{ github.repository }}
